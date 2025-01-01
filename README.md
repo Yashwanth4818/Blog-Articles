@@ -1,6 +1,6 @@
 <div>
 
-<h1 style="color:red"><b> Multi-Container-Application-Deployment with Docker Compose and Kubernetes </b></h1>
+<h1 style="color:red;"><b> Multi-Container-Application-Deployment with Docker Compose and Kubernetes </b></h1>
 
 <h2><b> 1. Overview </b></h2>
 
