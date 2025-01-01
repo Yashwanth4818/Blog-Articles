@@ -1,0 +1,49 @@
+version: '3'
+
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+  
+  backend:
+    build: ./techdome-backend
+    ports:
+      - "5000:5000"
+    environment:
+      - DB=mongodb+srv://new_user-03:iQfjgfNiKlCJXnxE@cluster0.tgsf0.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+      
+      - JWT_SECRET=f16c6f8ff8c086a6eb8e8facb0f80c729b9d8b3533d1ae4a8dddea0f16da899ca739e3e9a3bacaeff2efda863a616c1bf99f32528eee75de6b26fd9ae9cad6c3
+
+
+    depends_on:
+      - db
+    networks:
+      - app-network
+  
+  db:
+    image: mongo:6.0.17
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: mydatabase
+    ports:
+      - "27017:27017"
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "mongo", "--eval", "db.adminCommand('ping')"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mongo-data:
